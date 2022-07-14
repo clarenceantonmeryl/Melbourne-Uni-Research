@@ -72,3 +72,4 @@ def plot_gradient_graphs(squid_gradients, seal_gradients):
 
 squid_gradient_list, seal_gradient_list = get_gradient_lists()
 plot_gradient_graphs(squid_gradients=squid_gradient_list, seal_gradients=seal_gradient_list)
+

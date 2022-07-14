@@ -205,3 +205,4 @@ class DataGenerator:
             )
 
         return squid_gradient_list, seal_gradient_list
+

@@ -404,3 +404,4 @@ plot_data_no_seal_start()
 # squid_population_list, seal_population_list = get_population_lists(a_n=50, b_n=0.2)
 #
 # get_details(squid_population_list, seal_population_list)
+
