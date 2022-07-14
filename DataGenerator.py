@@ -1,4 +1,4 @@
-# To be used in other files. Uses code from 'main.py'
+# To be used in other files. Uses code from 'main.py', 'gradient.py'
 import numpy as np
 
 MEASUREMENTS = 500
@@ -10,6 +10,11 @@ class DataGenerator:
 
     def __init__(self):
         pass
+
+    @staticmethod
+    def calculate_gradient(y2, y1, x2, x1):
+        gradient = (y2 - y1) / (x2 - x1)
+        return gradient
 
     @staticmethod
     def squid_population(A_n, B_n, R, A_E, C):
@@ -172,3 +177,31 @@ class DataGenerator:
             )
 
         return squid_population_list, seal_population_list
+
+    def get_gradient_lists(self, squid_population_list, seal_population_list):
+        squid_gradient_list = [0]
+        seal_gradient_list = [0]
+
+        # Calculate squid gradients
+        for index in range(1, MEASUREMENTS):
+            squid_gradient_list.append(
+                self.calculate_gradient(
+                    y2=squid_population_list[index],
+                    y1=squid_population_list[index - 1],
+                    x2=index,
+                    x1=index - 1
+                )
+            )
+
+        # Calculate seal gradients
+        for index in range(1, MEASUREMENTS):
+            seal_gradient_list.append(
+                self.calculate_gradient(
+                    y2=seal_population_list[index],
+                    y1=seal_population_list[index - 1],
+                    x2=index,
+                    x1=index - 1
+                )
+            )
+
+        return squid_gradient_list, seal_gradient_list

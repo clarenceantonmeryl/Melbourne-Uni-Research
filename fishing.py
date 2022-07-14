@@ -139,6 +139,6 @@ def plot_data_both_fishing(k_squid=25000, P_squid=0.9, A_squid=3000, k_seal=198,
     plt.show()
 
 
-plot_data_squid_fishing()
-plot_data_seal_fishing()
+# plot_data_squid_fishing()
+# plot_data_seal_fishing()
 plot_data_both_fishing()

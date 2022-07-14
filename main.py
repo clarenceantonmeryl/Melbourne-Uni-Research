@@ -393,14 +393,14 @@ def plot_data_no_seal_start():
 
 
 # plot_data()
-# plot_data_varying_R()
-# plot_data_varying_A_E()
-# plot_data_varying_C()
-# plot_data_varying_r()
-# plot_data_varying_starting_a()
-# plot_data_varying_starting_b()
-# plot_data_no_squid_start()
-# plot_data_no_seal_start()
-squid_population_list, seal_population_list = get_population_lists(a_n=50, b_n=0.2)
-
-get_details(squid_population_list, seal_population_list)
+plot_data_varying_R()
+plot_data_varying_A_E()
+plot_data_varying_C()
+plot_data_varying_r()
+plot_data_varying_starting_a()
+plot_data_varying_starting_b()
+plot_data_no_squid_start()
+plot_data_no_seal_start()
+# squid_population_list, seal_population_list = get_population_lists(a_n=50, b_n=0.2)
+#
+# get_details(squid_population_list, seal_population_list)
