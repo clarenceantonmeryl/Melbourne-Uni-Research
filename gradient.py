@@ -68,8 +68,3 @@ def plot_gradient_graphs(squid_gradients, seal_gradients):
     plt.plot(X, seal_gradients, color="red")
 
     plt.show()
-
-
-squid_gradient_list, seal_gradient_list = get_gradient_lists()
-plot_gradient_graphs(squid_gradients=squid_gradient_list, seal_gradients=seal_gradient_list)
-

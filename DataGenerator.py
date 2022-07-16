@@ -36,6 +36,19 @@ class DataGenerator:
         B_n_plus_one = (r / A_E) * A_n * B_n - ((k * P) / A)
         return B_n_plus_one
 
+    @staticmethod
+    def get_details(population_list):
+        print("Mean")
+        print(np.mean(population_list))
+        print("\n Max")
+        print(np.max(population_list))
+        print("\n Min")
+        print(np.min(population_list))
+        print("\n")
+
+        for index in range(len(population_list)):
+            print(f"{index}: {population_list[index]}")
+
     def get_population_lists(self, a_n, b_n, R=3.0, A_E=100.0, C=0.5, r=2.0):
         squid_population_list = []
         seal_population_list = []
@@ -205,4 +218,3 @@ class DataGenerator:
             )
 
         return squid_gradient_list, seal_gradient_list
-

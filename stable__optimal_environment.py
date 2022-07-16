@@ -131,4 +131,3 @@ def optimal_environment():
 
 print(gradient_means)
 print(density_means)
-
