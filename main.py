@@ -8,6 +8,7 @@ X = np.linspace(0, MEASUREMENTS, MEASUREMENTS)
 
 data_generator = DataGenerator
 
+
 def squid_population(A_n, B_n, R, A_E, C):
     A_n_plus_one = R * A_n - ((R - 1) / A_E) * (A_n ** 2) - (C * A_n * B_n)
     return A_n_plus_one
@@ -48,33 +49,6 @@ def get_population_lists(a_n, b_n, R=3.0, A_E=100.0, C=0.5, r=2.0):
     return squid_population_list, seal_population_list
 
 
-def plot_data():
-    squid_population_list, seal_population_list = get_population_lists(a_n=50, b_n=0.2)
-
-    print(squid_population_list)
-    print(seal_population_list)
-
-    plt.figure(figsize=(24, 14))
-    # plt.title(f"Squid Population Density Over Time ({measurements} Measurements)")
-    plt.title(f"Population Densities of Squid and Seal Over Time ({MEASUREMENTS} Measurements)")
-    plt.xlim(0, MEASUREMENTS)
-    # plt.ylim(20, 100)
-    plt.xlabel("Time (n)")
-    plt.ylabel("Population density")
-
-    plt.plot(X, squid_population_list)
-    # plt.show()
-
-    # plt.title(f"Seal Population Density Over Time ({measurements} Measurements)")
-    plt.xlim(0, MEASUREMENTS)
-    # plt.ylim(0, 3)
-    plt.xlabel("Time (n)")
-    plt.ylabel("Population density")
-
-    plt.plot(X, seal_population_list, color='red')
-    plt.show()
-
-
 def get_details(squid_population_list, seal_population_list):
     print("Mean squid, seal")
     print(np.mean(squid_population_list))
@@ -90,8 +64,36 @@ def get_details(squid_population_list, seal_population_list):
 def config_graph():
     plt.figure(figsize=(24, 14))
     plt.xlim(0, MEASUREMENTS)
-    plt.xlabel("Time (n)")
-    plt.ylabel("Population density")
+    plt.xlabel("Time (n units of time)", fontsize=15)
+    plt.ylabel("Population density (animals/km²)", fontsize=15)
+
+
+def plot_data():
+    squid_population_list, seal_population_list = get_population_lists(a_n=50, b_n=0.2)
+
+    config_graph()
+    plt.title(f"Squid Population Density Over Time ({MEASUREMENTS} Measurements)",
+              fontsize=17)
+    plt.plot(X, squid_population_list)
+
+    plt.show()
+
+    config_graph()
+
+    plt.title(f"Seal Population Density Over Time ({MEASUREMENTS} Measurements)",
+              fontsize=17)
+    plt.plot(X, seal_population_list, color='red')
+
+    plt.show()
+
+    config_graph()
+
+    plt.title(f"Population Densities of Squid and Seal Over Time ({MEASUREMENTS} Measurements)",
+              fontsize=17)
+    plt.plot(X, squid_population_list)
+    plt.plot(X, seal_population_list, color='red')
+
+    plt.show()
 
 
 # Variables to experiment: R, A_E, C, r
@@ -103,7 +105,8 @@ def plot_data_varying_R():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and Low R Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and Low R Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_R, color="blue")
     plt.plot(X, squid_population_list_low_R, color="green")
 
@@ -111,7 +114,8 @@ def plot_data_varying_R():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and High R Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and High R Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_R, color="blue")
     plt.plot(X, squid_population_list_high_R, color="red")
 
@@ -119,7 +123,8 @@ def plot_data_varying_R():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and Low R Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and Low R Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_R, color="blue")
     plt.plot(X, seal_population_list_low_R, color="green")
 
@@ -127,7 +132,8 @@ def plot_data_varying_R():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and High R Values ({MEASUREMENTS}) Measurements")
+    plt.title(f"Seal Population Density Over Time With Normal and High R Values ({MEASUREMENTS}) Measurements",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_R, color="blue")
     plt.plot(X, seal_population_list_high_R, color="red")
 
@@ -141,18 +147,17 @@ def plot_data_varying_A_E():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and Low A_E Values ({MEASUREMENTS} Measurements")
+    plt.title(f"Squid Population Density Over Time With Normal and Low A_E Values ({MEASUREMENTS} Measurements",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_A_E, color="blue")
     plt.plot(X, squid_population_list_low_A_E, color="green")
 
     plt.show()
 
-    plt.figure(figsize=(24, 14))
-    plt.xlim(0, MEASUREMENTS)
-    plt.xlabel("Time (n)")
-    plt.ylabel("Population density")
+    config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and High A_E Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and High A_E Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_A_E, color="blue")
     plt.plot(X, squid_population_list_high_A_E, color="red")
 
@@ -160,7 +165,8 @@ def plot_data_varying_A_E():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and Low A_E Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and Low A_E Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_A_E, color="blue")
     plt.plot(X, seal_population_list_low_A_E, color="green")
 
@@ -168,7 +174,8 @@ def plot_data_varying_A_E():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and High A_E Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and High A_E Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_A_E, color="blue")
     plt.plot(X, seal_population_list_high_A_E, color="red")
 
@@ -176,7 +183,8 @@ def plot_data_varying_A_E():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Low and High A_E Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Low and High A_E Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_low_A_E, color="green")
     plt.plot(X, seal_population_list_high_A_E, color="red")
 
@@ -190,7 +198,8 @@ def plot_data_varying_C():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and Low C Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and Low C Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_C, color="blue")
     plt.plot(X, squid_population_list_low_C, color="green")
 
@@ -198,7 +207,8 @@ def plot_data_varying_C():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and High C Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and High C Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_C, color="blue")
     plt.plot(X, squid_population_list_high_C, color="red")
 
@@ -206,7 +216,8 @@ def plot_data_varying_C():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and Low C Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and Low C Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_C, color="blue")
     plt.plot(X, seal_population_list_low_C, color="green")
 
@@ -214,7 +225,8 @@ def plot_data_varying_C():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and High C Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and High C Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_C, color="blue")
     plt.plot(X, seal_population_list_high_C, color="red")
 
@@ -228,7 +240,8 @@ def plot_data_varying_r():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and Low r Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and Low r Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_r, color="blue")
     plt.plot(X, squid_population_list_low_r, color="green")
 
@@ -236,7 +249,8 @@ def plot_data_varying_r():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and High r Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and High r Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_r, color="blue")
     plt.plot(X, squid_population_list_high_r, color="red")
 
@@ -244,7 +258,8 @@ def plot_data_varying_r():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and Low r Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and Low r Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_r, color="blue")
     plt.plot(X, seal_population_list_low_r, color="green")
 
@@ -252,7 +267,8 @@ def plot_data_varying_r():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and High r Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and High r Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_r, color="blue")
     plt.plot(X, seal_population_list_high_r, color="red")
 
@@ -267,7 +283,8 @@ def plot_data_varying_starting_a():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and Low A_0 Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and Low A_0 Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_starting_a, color="blue")
     plt.plot(X, squid_population_list_low_starting_a, color="green")
 
@@ -275,7 +292,8 @@ def plot_data_varying_starting_a():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and High A_0 Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and High A_0 Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_starting_a, color="blue")
     plt.plot(X, squid_population_list_high_starting_a, color="red")
 
@@ -283,7 +301,8 @@ def plot_data_varying_starting_a():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and Low A_0 Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and Low A_0 Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_starting_a, color="blue")
     plt.plot(X, seal_population_list_low_starting_a, color="green")
 
@@ -291,7 +310,8 @@ def plot_data_varying_starting_a():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and High A_0 Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and High A_0 Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_starting_a, color="blue")
     plt.plot(X, seal_population_list_high_starting_a, color="red")
 
@@ -306,7 +326,8 @@ def plot_data_varying_starting_b():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and Low B_0 Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and Low B_0 Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_starting_b, color="blue")
     plt.plot(X, squid_population_list_low_starting_b, color="green")
 
@@ -314,14 +335,16 @@ def plot_data_varying_starting_b():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With Normal and High B_0 Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With Normal and High B_0 Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_normal_starting_b, color="blue")
     plt.plot(X, squid_population_list_high_starting_b, color="red")
 
     plt.show()
 
     config_graph()
-    plt.title(f"Seal Population Density Over Time With Normal and Low B_0 Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and Low B_0 Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_starting_b, color="blue")
     plt.plot(X, seal_population_list_low_starting_b, color="green")
 
@@ -329,7 +352,8 @@ def plot_data_varying_starting_b():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With Normal and High B_0 Values ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With Normal and High B_0 Values ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list_normal_starting_b, color="blue")
     plt.plot(X, seal_population_list_high_starting_b, color="red")
 
@@ -342,7 +366,8 @@ def plot_data_no_squid_start():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With and Without Squids Initially ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With and Without Squids Initially ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list, color="blue")
     plt.plot(X, squid_population_list_no_squid, color="green")
 
@@ -350,7 +375,8 @@ def plot_data_no_squid_start():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With and Without Squids Initially ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With and Without Squids Initially ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list, color="blue")
     plt.plot(X, seal_population_list_no_squid, color="green")
 
@@ -358,7 +384,8 @@ def plot_data_no_squid_start():
 
     config_graph()
 
-    plt.title(f"Environment Without Squids Initially ({MEASUREMENTS} Measurements)")
+    plt.title(f"Environment Without Squids Initially ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_no_squid, color="green")
     plt.plot(X, seal_population_list_no_squid, color="red", alpha=0.5)
 
@@ -371,7 +398,8 @@ def plot_data_no_seal_start():
 
     config_graph()
 
-    plt.title(f"Squid Population Density Over Time With and Without Seals Initially ({MEASUREMENTS} Measurements)")
+    plt.title(f"Squid Population Density Over Time With and Without Seals Initially ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list, color="blue")
     plt.plot(X, squid_population_list_no_seal, color="green")
 
@@ -379,7 +407,8 @@ def plot_data_no_seal_start():
 
     config_graph()
 
-    plt.title(f"Seal Population Density Over Time With and Without Seals Initially ({MEASUREMENTS} Measurements)")
+    plt.title(f"Seal Population Density Over Time With and Without Seals Initially ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, seal_population_list, color="blue")
     plt.plot(X, seal_population_list_no_seal, color="green")
 
@@ -387,7 +416,8 @@ def plot_data_no_seal_start():
 
     config_graph()
 
-    plt.title(f"Environment Without Seals Initially ({MEASUREMENTS} Measurements)")
+    plt.title(f"Environment Without Seals Initially ({MEASUREMENTS} Measurements)",
+              fontsize=17)
     plt.plot(X, squid_population_list_no_seal, color="green")
     plt.plot(X, seal_population_list_no_seal, color="red", alpha=0.5)
 
