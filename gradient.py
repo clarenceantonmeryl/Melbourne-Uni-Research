@@ -1,3 +1,4 @@
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -10,7 +11,6 @@ MEASUREMENTS = 500
 X = np.linspace(0, MEASUREMENTS, MEASUREMENTS)
 
 squid_population_list, seal_population_list = data_generator.get_population_lists(a_n=50, b_n=0.2)
-
 
 def calculate_gradient(y2, y1, x2, x1):
     gradient = (y2 - y1) / (x2 - x1)
