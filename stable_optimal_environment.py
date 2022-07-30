@@ -1,6 +1,3 @@
-
-
-
 # Calculate the most stable ecosystem by finding the median gradient of seal and squid
 
 # Create a for loop for each parameter, and at the most inner of the loop: generate the list, find the median  gradient

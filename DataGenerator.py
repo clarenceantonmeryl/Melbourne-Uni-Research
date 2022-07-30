@@ -1,6 +1,3 @@
-
-
-
 # To be used in other files. Uses code from 'main.py', 'gradient.py'
 import numpy as np
 
