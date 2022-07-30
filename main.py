@@ -4,7 +4,7 @@ from DataGenerator import DataGenerator
 
 MEASUREMENTS = 500
 
-X = np.linspace(0, MEASUREMENTS, MEASUREMENTS)
+
 
 data_generator = DataGenerator
 
