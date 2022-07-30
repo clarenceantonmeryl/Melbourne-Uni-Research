@@ -1,9 +1,11 @@
+
 # To be used in other files. Uses code from 'main.py', 'gradient.py'
 import numpy as np
 
 MEASUREMENTS = 500
 
 X = np.linspace(0, MEASUREMENTS, MEASUREMENTS)
+
 
 
 class DataGenerator:
