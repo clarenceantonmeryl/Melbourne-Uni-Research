@@ -1,3 +1,4 @@
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -6,6 +7,7 @@ from DataGenerator import DataGenerator
 data_generator = DataGenerator()
 
 MEASUREMENTS = 500
+
 
 X = np.linspace(0, MEASUREMENTS, MEASUREMENTS)
 
