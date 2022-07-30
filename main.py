@@ -1,10 +1,9 @@
+
 import matplotlib.pyplot as plt
 import numpy as np
 from DataGenerator import DataGenerator
 
 MEASUREMENTS = 500
-
-
 
 data_generator = DataGenerator
 
