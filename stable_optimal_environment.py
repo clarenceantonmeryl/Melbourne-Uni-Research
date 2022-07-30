@@ -236,22 +236,22 @@ def plot_stable_optimal():
 
 
 def load_data():
-    with open(file="/data/optimal-overall.json", mode="r") as optimal_overall_file:
+    with open(file="data/optimal-overall.json", mode="r") as optimal_overall_file:
         print('start')
         optimal_overall_data = json.load(optimal_overall_file)
         print('done')
 
-    with open(file="/data/optimal-squid-sorted.json", mode="r") as optimal_squid_file:
+    with open(file="data/optimal-squid-sorted.json", mode="r") as optimal_squid_file:
         print('start')
         optimal_squid_data = json.load(optimal_squid_file)
         print('done')
 
-    with open(file="/data/optimal-seal-sorted.json", mode="r") as optimal_seal_file:
+    with open(file="data/optimal-seal-sorted.json", mode="r") as optimal_seal_file:
         print('start')
         optimal_seal_data = json.load(optimal_seal_file)
         print('done')
 
-    with open(file="/data/stable.json", mode="r") as stable_file:
+    with open(file="data/stable.json", mode="r") as stable_file:
         print('start')
         stable_data = json.load(stable_file)
         print('done')
