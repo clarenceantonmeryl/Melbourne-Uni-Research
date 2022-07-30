@@ -1,3 +1,4 @@
+
 # Calculate the most stable ecosystem by finding the median gradient of seal and squid
 
 # Create a for loop for each parameter, and at the most inner of the loop: generate the list, find the median  gradient
@@ -236,22 +237,22 @@ def plot_stable_optimal():
 
 
 def load_data():
-    with open(file="optimal-overall.json", mode="r") as optimal_overall_file:
+    with open(file="/data/optimal-overall.json", mode="r") as optimal_overall_file:
         print('start')
         optimal_overall_data = json.load(optimal_overall_file)
         print('done')
 
-    with open(file="optimal-squid-sorted.json", mode="r") as optimal_squid_file:
+    with open(file="/data/optimal-squid-sorted.json", mode="r") as optimal_squid_file:
         print('start')
         optimal_squid_data = json.load(optimal_squid_file)
         print('done')
 
-    with open(file="optimal-seal-sorted.json", mode="r") as optimal_seal_file:
+    with open(file="/data/optimal-seal-sorted.json", mode="r") as optimal_seal_file:
         print('start')
         optimal_seal_data = json.load(optimal_seal_file)
         print('done')
 
-    with open(file="stable.json", mode="r") as stable_file:
+    with open(file="/data/stable.json", mode="r") as stable_file:
         print('start')
         stable_data = json.load(stable_file)
         print('done')
