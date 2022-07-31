@@ -1,4 +1,4 @@
-# Calculate the most stable ecosystem by finding the median gradient of seal and squid
+# Calculate the most stable environment by finding the median gradient of seal and squid
 
 # Create a for loop for each parameter, and at the most inner of the loop: generate the list, find the median  gradient
 # of each species, find the mean of this and add this to a dataframe. Dataframe should have an index, entry for each
@@ -236,6 +236,16 @@ def plot_stable_optimal():
 
 
 def load_data():
+    with open(file="data/optimal.json", mode="r") as upper_section_optimal_file:
+        print('start')
+        upper_section_data = json.load(upper_section_optimal_file)
+        print('done')
+
+    with open(file="data/optimal-1.json", mode="r") as lower_section_optimal_file:
+        print('start')
+        lower_section_data = json.load(lower_section_optimal_file)
+        print('done')
+
     with open(file="data/optimal-overall.json", mode="r") as optimal_overall_file:
         print('start')
         optimal_overall_data = json.load(optimal_overall_file)
@@ -256,76 +266,64 @@ def load_data():
         stable_data = json.load(stable_file)
         print('done')
 
+    upper_section_optimal_df = pd.DataFrame(data=upper_section_data)
+    lower_section_optimal_df = pd.DataFrame(data=lower_section_data)
     overall_optimal_df = pd.DataFrame(data=optimal_overall_data)
     squid_optimal_df = pd.DataFrame(data=optimal_squid_data)
     seal_optimal_df = pd.DataFrame(data=optimal_seal_data)
     stable_df = pd.DataFrame(data=stable_data)
 
-    return overall_optimal_df, squid_optimal_df, seal_optimal_df, stable_df
+    return upper_section_optimal_df, lower_section_optimal_df, overall_optimal_df, squid_optimal_df, seal_optimal_df, stable_df
+
+
+def get_mask(df):
+    mask = np.zeros_like(df.corr())
+    triangle_indices = np.triu_indices_from(mask)
+    mask[triangle_indices] = True
+
+    return mask
+
+
+def plot_heatmap(df, mask, title):
+    plt.figure(figsize=(24, 14))
+    plt.title(f"{title}", fontsize=17)
+    sns.heatmap(df.corr(), mask=mask, annot=True, annot_kws={"size": 15})
+    sns.set_style('white')
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
+    plt.show()
+
+
+def heatmaps():
+    upper_section_optimal_df, lower_section_optimal_df, overall_optimal_df, squid_optimal_df, seal_optimal_df, stable_df = load_data()
+
+    upper_section_mask = get_mask(df=upper_section_optimal_df)
+    lower_section_mask = get_mask(df=lower_section_optimal_df)
+    mask_stable = get_mask(df=stable_df)
+    mask_overall = get_mask(df=overall_optimal_df)
+    mask_squid = get_mask(df=squid_optimal_df)
+    mask_seal = get_mask(df=seal_optimal_df)
+
+    plot_heatmap(df=upper_section_optimal_df, mask=upper_section_mask, title="Correlations Between Variables for the Upper Section Optimal Environment")
+    plot_heatmap(df=lower_section_optimal_df, mask=lower_section_mask, title="Correlations Between Variables for the Lower Section Optimal Environment")
+    plot_heatmap(df=stable_df, mask=mask_stable, title="Correlations Between Variables for Most Stable Environment")
+    plot_heatmap(df=overall_optimal_df, mask=mask_overall, title="Correlations Between Variables for Most Optimal Environment Overall")
+    plot_heatmap(df=squid_optimal_df, mask=mask_squid, title="Correlations Between Variables for Most Optimal Ecosystem for Squids")
+    plot_heatmap(df=seal_optimal_df, mask=mask_seal, title="Correlations Between Variables for Most Optimal Ecosystem for Seals")
+
+    # sns.pairplot(stable_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
+    # plt.show()
+    #
+    # sns.pairplot(overall_optimal_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
+    # plt.show()
+    #
+    # sns.pairplot(squid_optimal_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
+    # plt.show()
+    #
+    # sns.pairplot(seal_optimal_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
+    # plt.show()
 
 
 start_time = timeit.default_timer()
-
-overall_optimal_df, squid_optimal_df, seal_optimal_df, stable_df = load_data()
-
-mask_stable = np.zeros_like(stable_df.corr())
-triangle_indices = np.triu_indices_from(mask_stable)
-mask_stable[triangle_indices] = True
-
-mask_overall = np.zeros_like(overall_optimal_df.corr())
-triangle_indices = np.triu_indices_from(mask_overall)
-mask_overall[triangle_indices] = True
-
-mask_squid = np.zeros_like(squid_optimal_df.corr())
-triangle_indices = np.triu_indices_from(mask_squid)
-mask_squid[triangle_indices] = True
-
-mask_seal = np.zeros_like(seal_optimal_df.corr())
-triangle_indices = np.triu_indices_from(mask_seal)
-mask_seal[triangle_indices] = True
-
-plt.figure(figsize=(24, 14))
-plt.title("Correlations Between Variables for Most Stable Ecosystem", fontsize=17)
-sns.heatmap(stable_df.corr(), mask=mask_stable, annot=True, annot_kws={"size": 15})
-sns.set_style('white')
-plt.xticks(fontsize=15)
-plt.yticks(fontsize=15)
-plt.show()
-
-plt.figure(figsize=(24, 14))
-plt.title("Correlations Between Variables for Most Optimal Ecosystem Overall", fontsize=17)
-sns.heatmap(overall_optimal_df.corr(), mask=mask_overall, annot=True, annot_kws={"size": 15})
-sns.set_style('white')
-plt.xticks(fontsize=15)
-plt.yticks(fontsize=15)
-plt.show()
-
-plt.figure(figsize=(24, 14))
-plt.title("Correlations Between Variables for Most Optimal Ecosystem for Squids", fontsize=17)
-sns.heatmap(squid_optimal_df.corr(), mask=mask_squid, annot=True, annot_kws={"size": 15})
-sns.set_style('white')
-plt.xticks(fontsize=15)
-plt.yticks(fontsize=15)
-plt.show()
-
-plt.figure(figsize=(24, 14))
-plt.title("Correlations Between Variables for Most Optimal Ecosystem for Seals", fontsize=17)
-sns.heatmap(seal_optimal_df.corr(), mask=mask_seal, annot=True, annot_kws={"size": 15})
-sns.set_style('white')
-plt.xticks(fontsize=15)
-plt.yticks(fontsize=15)
-plt.show()
-
-sns.pairplot(stable_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
-plt.show()
-
-sns.pairplot(overall_optimal_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
-plt.show()
-
-sns.pairplot(squid_optimal_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
-plt.show()
-
-sns.pairplot(seal_optimal_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
-plt.show()
-
+heatmaps()
 print(timeit.default_timer() - start_time)
