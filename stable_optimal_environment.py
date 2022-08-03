@@ -17,8 +17,6 @@ import timeit
 from DataGenerator import DataGenerator
 import matplotlib.pyplot as plt
 import seaborn as sns
-import statsmodels.api as sm
-from statsmodels.stats.outliers_influence import variance_inflation_factor
 import json
 
 MEASUREMENTS = 500
@@ -33,6 +31,7 @@ def stable_environment():
     C_list = []
     A_E_list = []
     gradient_means = []
+
     for R_raw in range(14, 44):
         R = R_raw / 10
 
@@ -43,11 +42,6 @@ def stable_environment():
                 C = C_raw / 10
 
                 for A_E in range(50, 201):
-
-                    R_list.append(R)
-                    r_list.append(r)
-                    C_list.append(C)
-                    A_E_list.append(A_E)
 
                     try:
                         squid_population_list, seal_population_list = data_generator.get_population_lists(
@@ -60,10 +54,14 @@ def stable_environment():
                         )
 
                     except OverflowError:
-                        gradient_means.append(10000000)
                         print(f"{R} {r} {C} {A_E} OVERFLOW")
-
+                        continue
                     else:
+                        R_list.append(R)
+                        r_list.append(r)
+                        C_list.append(C)
+                        A_E_list.append(A_E)
+
                         squid_gradient, seal_gradient = data_generator.get_gradient_lists(
                             squid_population_list,
                             seal_population_list
@@ -73,7 +71,9 @@ def stable_environment():
                         seal_median = np.median(seal_gradient)
 
                         squid_seal_mean = (squid_median + seal_median) / 2
-                        gradient_means.append(abs(squid_seal_mean))
+                        if squid_seal_mean < 0:
+                            squid_seal_mean = squid_seal_mean * -1
+                        gradient_means.append(squid_seal_mean)
                         print(f"{R} {r} {C} {A_E} {squid_seal_mean}")
 
     return R_list, r_list, C_list, A_E_list, gradient_means
@@ -88,7 +88,7 @@ def optimal_environment():
     seal_medians = []
     squid_medians = []
 
-    for R_raw in range(1, 44):
+    for R_raw in range(1, 43):
         R = R_raw / 10
 
         for r_raw in range(1, 30):
@@ -98,11 +98,6 @@ def optimal_environment():
                 C = C_raw / 10
 
                 for A_E in range(50, 201):
-
-                    R_list.append(R)
-                    r_list.append(r)
-                    C_list.append(C)
-                    A_E_list.append(A_E)
 
                     try:
                         squid_population_list, seal_population_list = data_generator.get_population_lists(
@@ -115,10 +110,14 @@ def optimal_environment():
                         )
 
                     except OverflowError:
-                        density_means.append(-1000000)
-                        squid_medians.append(-1000000)
-                        seal_medians.append(-1000000)
+                        print(f"{R} {r} {C} {A_E} OVERFLOW")
+                        continue
                     else:
+                        R_list.append(R)
+                        r_list.append(r)
+                        C_list.append(C)
+                        A_E_list.append(A_E)
+
                         squid_median = np.median(squid_population_list)
                         seal_median = np.median(seal_population_list)
 
@@ -188,25 +187,25 @@ def config_graph():
 
 def plot_stable_optimal():
     squid_population_list_stable, seal_population_list_stable = data_generator.get_population_lists(a_n=50, b_n=0.2,
-                                                                                                    R=2.7,
-                                                                                                    A_E=119, C=0.5,
-                                                                                                    r=1.4)
+                                                                                                    R=2.8,
+                                                                                                    A_E=182, C=0.7,
+                                                                                                    r=1.3)
 
     squid_population_list_overall_optimal, seal_population_list_overall_optimal = data_generator.get_population_lists(
-        a_n=50, b_n=0.2, R=1.4, A_E=200, C=0.2, r=1.0)
+        a_n=50, b_n=0.2, R=2.9, A_E=200, C=0.3, r=0.9)
 
     squid_population_list_squid_optimal, seal_population_list_squid_optimal = data_generator.get_population_lists(
         a_n=50,
         b_n=0.2,
         R=1.7,
         A_E=200,
-        C=0.3,
-        r=0.3)
+        C=0.1,
+        r=0.5)
 
     squid_population_list_seal_optimal, seal_population_list_seal_optimal = data_generator.get_population_lists(a_n=50,
                                                                                                                 b_n=0.2,
-                                                                                                                R=4.3,
-                                                                                                                A_E=57,
+                                                                                                                R=4.2,
+                                                                                                                A_E=160,
                                                                                                                 C=0.1,
                                                                                                                 r=2.2)
 
@@ -295,35 +294,33 @@ def plot_heatmap(df, mask, title):
 
 
 def heatmaps():
+
     upper_section_optimal_df, lower_section_optimal_df, overall_optimal_df, squid_optimal_df, seal_optimal_df, stable_df = load_data()
 
     upper_section_mask = get_mask(df=upper_section_optimal_df)
     lower_section_mask = get_mask(df=lower_section_optimal_df)
     mask_stable = get_mask(df=stable_df)
     mask_overall = get_mask(df=overall_optimal_df)
-    mask_squid = get_mask(df=squid_optimal_df)
-    mask_seal = get_mask(df=seal_optimal_df)
 
-    plot_heatmap(df=upper_section_optimal_df, mask=upper_section_mask, title="Correlations Between Variables for the Upper Section Optimal Environment")
-    plot_heatmap(df=lower_section_optimal_df, mask=lower_section_mask, title="Correlations Between Variables for the Lower Section Optimal Environment")
+    plot_heatmap(df=upper_section_optimal_df, mask=upper_section_mask,
+                 title="Correlations Between Variables for the Upper Section Optimal Environment")
+    plot_heatmap(df=lower_section_optimal_df, mask=lower_section_mask,
+                 title="Correlations Between Variables for the Lower Section Optimal Environment")
     plot_heatmap(df=stable_df, mask=mask_stable, title="Correlations Between Variables for Most Stable Environment")
-    plot_heatmap(df=overall_optimal_df, mask=mask_overall, title="Correlations Between Variables for Most Optimal Environment Overall")
-    plot_heatmap(df=squid_optimal_df, mask=mask_squid, title="Correlations Between Variables for Most Optimal Ecosystem for Squids")
-    plot_heatmap(df=seal_optimal_df, mask=mask_seal, title="Correlations Between Variables for Most Optimal Ecosystem for Seals")
+    plot_heatmap(df=overall_optimal_df, mask=mask_overall,
+                 title="Correlations Between Variables for Most Optimal Environment Overall, for Squids and for Seals")
 
-    # sns.pairplot(stable_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
-    # plt.show()
-    #
-    # sns.pairplot(overall_optimal_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
-    # plt.show()
-    #
-    # sns.pairplot(squid_optimal_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
-    # plt.show()
-    #
-    # sns.pairplot(seal_optimal_df, kind='reg', plot_kws={'line_kws': {'color': 'red'}})
-    # plt.show()
+
+def lmplots():
+    upper_section_optimal_df, lower_section_optimal_df, overall_optimal_df, squid_optimal_df, seal_optimal_df, stable_df = load_data()
+
+    sns.lmplot(x='R', y='Gradient mean', data=stable_df, size=0.5)
+    plt.show()
 
 
 start_time = timeit.default_timer()
-heatmaps()
+# generate_data()
+# heatmaps
+lmplots()
+plot_stable_optimal()
 print(timeit.default_timer() - start_time)

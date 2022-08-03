@@ -11,6 +11,7 @@ X = np.linspace(0, MEASUREMENTS, MEASUREMENTS)
 
 squid_population_list, seal_population_list = data_generator.get_population_lists(a_n=50, b_n=0.2)
 
+
 def calculate_gradient(y2, y1, x2, x1):
     gradient = (y2 - y1) / (x2 - x1)
     return gradient
@@ -54,7 +55,6 @@ def get_gradient_lists():
 
 
 def plot_gradient_graphs(squid_gradients, seal_gradients):
-
     config_graph()
 
     plt.title(f"Gradient of the Graph of Squid Population Density ({MEASUREMENTS} measurements)",
