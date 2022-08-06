@@ -294,7 +294,6 @@ def plot_heatmap(df, mask, title):
 
 
 def heatmaps():
-
     upper_section_optimal_df, lower_section_optimal_df, overall_optimal_df, squid_optimal_df, seal_optimal_df, stable_df = load_data()
 
     upper_section_mask = get_mask(df=upper_section_optimal_df)
@@ -311,16 +310,66 @@ def heatmaps():
                  title="Correlations Between Variables for Most Optimal Environment Overall, for Squids and for Seals")
 
 
+def plot_lmplot(x, y, df, title):
+    sns.lmplot(x=x, y=y, data=df, height=10, scatter_kws={'alpha': 0.6}, line_kws={'color': 'darkred'})
+    plt.title(f"{title}")
+    plt.tight_layout()
+    plt.show()
+
+
+def generate_title(variable1, variable2):
+    return f"Graph of {variable1} Against {variable2}"
+
+
 def lmplots():
     upper_section_optimal_df, lower_section_optimal_df, overall_optimal_df, squid_optimal_df, seal_optimal_df, stable_df = load_data()
 
-    sns.lmplot(x='R', y='Gradient mean', data=stable_df, size=0.5)
-    plt.show()
+    # Stable
+    # print("Stable")
+    # plot_lmplot(x='R', y='Gradient mean', df=stable_df, title=generate_title("R", "Gradient mean"))
+    # plot_lmplot(x='r', y='Gradient mean', df=stable_df, title=generate_title("r", "Gradient mean"))
+    # plot_lmplot(x='C', y='Gradient mean', df=stable_df, title=generate_title("C", "Gradient mean"))
+    # plot_lmplot(x='A_E', y='Gradient mean', df=stable_df, title=generate_title("A_E", "Gradient mean"))
+
+    # Upper
+    # print("Upper")
+    # plot_lmplot(x='R', y='Density mean', df=upper_section_optimal_df, title=generate_title("R", "Density mean"))
+    # plot_lmplot(x='r', y='Density mean', df=upper_section_optimal_df, title=generate_title("r", "Density mean"))
+    # plot_lmplot(x='C', y='Density mean', df=upper_section_optimal_df, title=generate_title("C", "Density mean"))
+    # plot_lmplot(x='A_E', y='Density mean', df=upper_section_optimal_df, title=generate_title("A_E", "Density mean"))
+
+    # Lower
+    # print("Lower")
+    # plot_lmplot(x='R', y='Density mean', df=lower_section_optimal_df, title=generate_title("R", "Density mean"))
+    # plot_lmplot(x='r', y='Density mean', df=lower_section_optimal_df, title=generate_title("r", "Density mean"))
+    # plot_lmplot(x='C', y='Density mean', df=lower_section_optimal_df, title=generate_title("C", "Density mean"))
+    # plot_lmplot(x='A_E', y='Density mean', df=lower_section_optimal_df, title=generate_title("A_E", "Density mean"))
+
+    # Overall
+    # print("Overall")
+    # plot_lmplot(x='R', y='Density mean', df=overall_optimal_df, title=generate_title("R", "Density mean"))
+    # plot_lmplot(x='r', y='Density mean', df=overall_optimal_df, title=generate_title("r", "Density mean"))
+    # plot_lmplot(x='C', y='Density mean', df=overall_optimal_df, title=generate_title("C", "Density mean"))
+    # plot_lmplot(x='A_E', y='Density mean', df=overall_optimal_df, title=generate_title("A_E", "Density mean"))
+
+    # Squid
+    # print("Squid Optimal")
+    # plot_lmplot(x='R', y='Squid medians', df=squid_optimal_df, title=generate_title("R", "Squid medians"))
+    # plot_lmplot(x='r', y='Squid medians', df=squid_optimal_df, title=generate_title("r", "Squid medians"))
+    # plot_lmplot(x='C', y='Squid medians', df=squid_optimal_df, title=generate_title("C", "Squid medians"))
+    # plot_lmplot(x='A_E', y='Squid medians', df=squid_optimal_df, title=generate_title("A_E", "Squid medians"))
+
+    # Seal
+    # print("Seal Optimal")
+    # plot_lmplot(x='R', y='Seal medians', df=seal_optimal_df, title=generate_title("R", "Seal medians"))
+    plot_lmplot(x='r', y='Seal medians', df=seal_optimal_df, title=generate_title("r", "Seal medians"))
+    # plot_lmplot(x='C', y='Seal medians', df=seal_optimal_df, title=generate_title("C", "Seal medians"))
+    # plot_lmplot(x='A_E', y='Seal medians', df=seal_optimal_df, title=generate_title("A_E", "Seal medians"))
 
 
 start_time = timeit.default_timer()
 # generate_data()
-# heatmaps
+# heatmaps()
 lmplots()
-plot_stable_optimal()
+# plot_stable_optimal()
 print(timeit.default_timer() - start_time)

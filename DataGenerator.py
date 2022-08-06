@@ -6,7 +6,6 @@ MEASUREMENTS = 500
 X = np.linspace(0, MEASUREMENTS, MEASUREMENTS)
 
 
-
 class DataGenerator:
 
     def __init__(self):

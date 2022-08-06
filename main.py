@@ -6,6 +6,8 @@ MEASUREMENTS = 500
 
 data_generator = DataGenerator
 
+X = np.linspace(0, MEASUREMENTS, MEASUREMENTS)
+
 
 def squid_population(A_n, B_n, R, A_E, C):
     A_n_plus_one = R * A_n - ((R - 1) / A_E) * (A_n ** 2) - (C * A_n * B_n)
@@ -420,7 +422,6 @@ def plot_data_no_seal_start():
     plt.plot(X, seal_population_list_no_seal, color="red", alpha=0.5)
 
     plt.show()
-
 
 # plot_data()
 # plot_data_varying_R()
