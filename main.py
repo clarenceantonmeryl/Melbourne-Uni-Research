@@ -1,32 +1,52 @@
+# Note: In this file, and other files, population is used sometimes instead of population density
+# For example, population_list actually means the population density list
+
+# Import Libraries and Classes
+
+# matplotlib will be used to plot graphs
 import matplotlib.pyplot as plt
+
+# numpy will be used to handle arrays
 import numpy as np
+
+# DataGenerator is a class from the DataGenerator.py file
 from DataGenerator import DataGenerator
 
+# Initialise the amount of measurements per graph
 MEASUREMENTS = 500
 
-data_generator = DataGenerator
+# Initialise a DataGenerator object
+data_generator = DataGenerator()
 
-X = np.linspace(0, MEASUREMENTS, MEASUREMENTS)
+# Initialise the X list, which will act as a list of x values for graphs
+X = [x for x in range(0, MEASUREMENTS + 1)]
 
 
 def squid_population(A_n, B_n, R, A_E, C):
+    # Compute the squid population density given the parameters
     A_n_plus_one = R * A_n - ((R - 1) / A_E) * (A_n ** 2) - (C * A_n * B_n)
     return A_n_plus_one
 
 
 def seal_population(A_n, B_n, A_E, r):
+    # Compute the seal population density given the parameters
     B_n_plus_one = (r / A_E) * A_n * B_n
     return B_n_plus_one
 
 
 def get_population_lists(a_n, b_n, R=3.0, A_E=100.0, C=0.5, r=2.0):
+    # Initialise the population density lists for squids and seals, which will act as the y values for graphs
     squid_population_list = []
     seal_population_list = []
 
+    # Add the initial squid and seal population densities
     squid_population_list.append(a_n)
     seal_population_list.append(b_n)
 
     for _ in range(len(X) - 1):
+        # This loop will run for the amount of x values
+
+        # Compute the squid population density with the given parameters (an index of -1, such as list[-1] gets the last item of a list)
         squid_population_list.append(
             squid_population(
                 A_n=squid_population_list[-1],
@@ -37,6 +57,7 @@ def get_population_lists(a_n, b_n, R=3.0, A_E=100.0, C=0.5, r=2.0):
             )
         )
 
+        # Compute the seal population density with the given parameters (an index of -2 is used because the new squid population density would have already been added)
         seal_population_list.append(
             seal_population(
                 A_n=squid_population_list[-2],
@@ -50,6 +71,7 @@ def get_population_lists(a_n, b_n, R=3.0, A_E=100.0, C=0.5, r=2.0):
 
 
 def get_details(squid_population_list, seal_population_list):
+    # Given two lists, print the means, maximums and minimums for squids and seals
     print("Mean squid, seal")
     print(np.mean(squid_population_list))
     print(np.mean(seal_population_list))
@@ -61,7 +83,14 @@ def get_details(squid_population_list, seal_population_list):
     print(np.min(seal_population_list))
 
 
+def present(list_presented):
+    # Print the list in a readable format in the Python Console
+    for index in range(0, len(list_presented)):
+        print(f"{index}: {list_presented[index]}")
+
+
 def config_graph():
+    # Sets up the graphs by setting the size, axis titles, font sizes and x limits
     plt.figure(figsize=(24, 14))
     plt.xlim(0, MEASUREMENTS)
     plt.xlabel("Time (n units of time)", fontsize=15)
@@ -69,13 +98,28 @@ def config_graph():
 
 
 def plot_data():
+
+    # Get squid and seal population density data
     squid_population_list, seal_population_list = get_population_lists(a_n=50, b_n=0.2)
 
+    # A sample of how get_details can be used
+    get_details(squid_population_list, seal_population_list)
+
+    # A sample of how present can be used
+    present(squid_population_list)
+    present(seal_population_list)
+
+    # Initialise the graph
     config_graph()
+
+    # Set the title of the graph, along with its font size
     plt.title(f"Squid Population Density Over Time ({MEASUREMENTS} Measurements)",
               fontsize=17)
+
+    # Plotting the actual graph
     plt.plot(X, squid_population_list)
 
+    # Showing the graph (this and the above 3 steps will be used repeatedly to generate a graph in this and other plot functions)
     plt.show()
 
     config_graph()
@@ -96,9 +140,8 @@ def plot_data():
     plt.show()
 
 
-# Variables to experiment: R, A_E, C, r
-
 def plot_data_varying_R():
+    # Get the squid and seal population density data for various R values
     squid_population_list_normal_R, seal_population_list_normal_R = get_population_lists(a_n=50, b_n=0.2)
     squid_population_list_high_R, seal_population_list_high_R = get_population_lists(a_n=50, b_n=0.2, R=4.23)
     squid_population_list_low_R, seal_population_list_low_R = get_population_lists(a_n=50, b_n=0.2, R=1.5)
@@ -141,6 +184,7 @@ def plot_data_varying_R():
 
 
 def plot_data_varying_A_E():
+    # Get the squid and seal population density data for various A_E values
     squid_population_list_normal_A_E, seal_population_list_normal_A_E = get_population_lists(a_n=50, b_n=0.2)
     squid_population_list_high_A_E, seal_population_list_high_A_E = get_population_lists(a_n=50, b_n=0.2, A_E=200)
     squid_population_list_low_A_E, seal_population_list_low_A_E = get_population_lists(a_n=50, b_n=0.2, A_E=50)
@@ -192,6 +236,7 @@ def plot_data_varying_A_E():
 
 
 def plot_data_varying_C():
+    # Get the squid and seal population density data for various C values
     squid_population_list_normal_C, seal_population_list_normal_C = get_population_lists(a_n=50, b_n=0.2)
     squid_population_list_high_C, seal_population_list_high_C = get_population_lists(a_n=50, b_n=0.2, C=1)
     squid_population_list_low_C, seal_population_list_low_C = get_population_lists(a_n=50, b_n=0.2, C=0.25)
@@ -234,6 +279,7 @@ def plot_data_varying_C():
 
 
 def plot_data_varying_r():
+    # Get the squid and seal population density data for various r values
     squid_population_list_normal_r, seal_population_list_normal_r = get_population_lists(a_n=50, b_n=0.2)
     squid_population_list_high_r, seal_population_list_high_r = get_population_lists(a_n=50, b_n=0.2, r=2.88)
     squid_population_list_low_r, seal_population_list_low_r = get_population_lists(a_n=50, b_n=0.2, r=1)
@@ -276,6 +322,7 @@ def plot_data_varying_r():
 
 
 def plot_data_varying_starting_a():
+    # Get the squid and seal population density data for various A_0 values
     squid_population_list_normal_starting_a, seal_population_list_normal_starting_a = get_population_lists(a_n=50,
                                                                                                            b_n=0.2)
     squid_population_list_high_starting_a, seal_population_list_high_starting_a = get_population_lists(a_n=125, b_n=0.2)
@@ -319,6 +366,7 @@ def plot_data_varying_starting_a():
 
 
 def plot_data_varying_starting_b():
+    # Get the squid and seal population density data for various B_0 values
     squid_population_list_normal_starting_b, seal_population_list_normal_starting_b = get_population_lists(a_n=50,
                                                                                                            b_n=0.2)
     squid_population_list_high_starting_b, seal_population_list_high_starting_b = get_population_lists(a_n=50, b_n=0.8)
@@ -361,6 +409,7 @@ def plot_data_varying_starting_b():
 
 
 def plot_data_no_squid_start():
+    # Get the squid and seal population density data for when no squids are present initially and when they are present initially
     squid_population_list, seal_population_list = get_population_lists(a_n=50, b_n=0.2)
     squid_population_list_no_squid, seal_population_list_no_squid = get_population_lists(a_n=0, b_n=0.2)
 
@@ -393,6 +442,7 @@ def plot_data_no_squid_start():
 
 
 def plot_data_no_seal_start():
+    # Get the squid and seal population density data for when no seals are present initially and when they are present initially
     squid_population_list, seal_population_list = get_population_lists(a_n=50, b_n=0.2)
     squid_population_list_no_seal, seal_population_list_no_seal = get_population_lists(a_n=50, b_n=0)
 
@@ -423,12 +473,14 @@ def plot_data_no_seal_start():
 
     plt.show()
 
-# plot_data()
-# plot_data_varying_R()
-# plot_data_varying_A_E()
-# plot_data_varying_C()
-# plot_data_varying_r()
-# plot_data_varying_starting_a()
-# plot_data_varying_starting_b()
-# plot_data_no_squid_start()
-# plot_data_no_seal_start()
+
+# Calling the functions
+plot_data()
+plot_data_varying_R()
+plot_data_varying_A_E()
+plot_data_varying_C()
+plot_data_varying_r()
+plot_data_varying_starting_a()
+plot_data_varying_starting_b()
+plot_data_no_squid_start()
+plot_data_no_seal_start()
